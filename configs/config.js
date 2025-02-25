@@ -7,5 +7,6 @@ module.exports={
     PORT:process.env.PORT,
     MONGO_URI:process.env.MONGO_URI,
     EXPIRE_DATE:process.env.EXPIRE_DATE,
-    TOKEN_SECRET_KEY:process.env.TOKEN_SECRET_KEY
+    TOKEN_SECRET_KEY:process.env.TOKEN_SECRET_KEY,
+    TMDB_API_KEY:process.env.TMDB_API_KEY
 }

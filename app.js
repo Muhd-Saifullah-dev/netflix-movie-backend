@@ -3,7 +3,7 @@ const app=express()
 const ReqResInspector=require("express-req-res-inspector")
 const globalErrorMiddleware = require("./middleware/globalError.middleware")
 const rootRoutes=require("./routes/index")
-
+const cookieParser=require("cookie-parser")
 
 
 
@@ -23,7 +23,7 @@ app.get("/api/v1/heath-check",(req,res,next)=>{
 
 // routes define here
 app.use("/api/v1",rootRoutes)
-
+app.use(cookieParser())
 
 
 

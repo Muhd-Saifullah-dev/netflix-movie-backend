@@ -59,7 +59,7 @@ const LoginUser=async (req,res,next)=>{
 }
 const LogoutUser=async (req,res,next)=>{
     try {
-        res.clearCookie("netflix-token",CookieOption)
+        res.clearCookie("netflix-token")
         okResponse(res,200,"user logged out successfully ")
     } catch (error) {
         console.error(`error in logout user :: ${error}`)
