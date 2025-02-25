@@ -1,6 +1,9 @@
 const { BadRequestError}=require("../customErrors");
 const {User}=require("../model/index")
 const { okResponse}=require("../utils/handlerErrors.util")
+const {CookieOption }=require("../constant")
+
+
 
 const SignupUser=async (req,res,next)=>{
     try {
@@ -20,9 +23,12 @@ const SignupUser=async (req,res,next)=>{
             image
         })
         const Token=await newUser.generateToken()
-        okResponse(res,201,"User created Successfully",{user:{name:newUser.username,
-            Image:newUser.image
-        }},{token:Token})
+        const userResponse=newUser.toObject()
+        delete userResponse.password
+        res.cookie('netflix-token',Token,CookieOption)
+
+        okResponse(res,201,"User created Successfully",{user:userResponse
+        },{token:Token})
     } catch (error) {
         console.error(`error in signup user :: ${error}`)
         next(error)
@@ -30,17 +36,40 @@ const SignupUser=async (req,res,next)=>{
 
 }
 const LoginUser=async (req,res,next)=>{
-    const {email,password }=req.body
-    const existingUser=await User.findOne({email})
-    if(!existingUser){
-        throw new BadRequestError("sorry user not found")
-    }
-    const matchPassword= existingUser.isPasswordCorrect(password)
-    if(!matchPassword){
-        throw new BadRequestError("Invalid Credientials !")
-    }
-
-
+   try {
+     const {email,password }=req.body
+     const existingUser=await User.findOne({email})
+     if(!existingUser){
+         throw new BadRequestError("sorry user not found")
+     }
+     const matchPassword= await existingUser.isPasswordCorrect(password)
+     if(!matchPassword){
+         throw new BadRequestError("Invalid Credientials !")
+     }
+     const Token=await existingUser.generateToken()
+     const userResponse=existingUser.toObject()
+     delete userResponse.password
+     res.cookie('netflix-token',Token,CookieOption)
+     okResponse(res,200,"User logged In successfully ",{user:userResponse},{token:Token})
+   } catch (error) {
+        console.error(`error in login user :: ${error}`)
+        next(error)
+   }
 
 }
-const LogoutUser=async (req,res,next)=>{}
+const LogoutUser=async (req,res,next)=>{
+    try {
+        res.clearCookie("netflix-token",CookieOption)
+        okResponse(res,200,"user logged out successfully ")
+    } catch (error) {
+        console.error(`error in logout user :: ${error}`)
+        next(error)
+    }
+}
+
+
+module.exports={
+    SignupUser,
+    LoginUser,
+    LogoutUser
+}

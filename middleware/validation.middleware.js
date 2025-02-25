@@ -1,11 +1,12 @@
 const {validationResult }=require("express-validator")
 
-const validatioMiddleware=async(req,res,next)=>{
+const validationMiddleware=async(req,res,next)=>{
     const errors=validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(400).json({validationError:errors.array()})
+        const firstError=errors.array()[0]
+        return res.status(400).json({validationError:firstError})
     }
     next()
 }
 
-module.exports=validatioMiddleware
+module.exports={validationMiddleware}

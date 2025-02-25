@@ -10,9 +10,10 @@ const connectionDatabase = async () => {
     console.log(`MongoDB Connected  ${conn.connection.host}`);
 
     const modelsPath = path.join(__dirname, "../model");
-    fs.readFileSync(modelsPath).forEach((file) => {
-      if (file !== "index.js") require(path.join(modelsPath, file));
-    });
+    fs.readdirSync(modelsPath).forEach((file) => {
+      if (file !== "index.js") {
+        require(path.join(modelsPath, file));
+  }});
   } catch (error) {
     console.error(`error in connection :: ${error}`);
     process.exit(1);
