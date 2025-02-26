@@ -9,7 +9,7 @@ const fetchDataFromTMDB = async (url) => {
         accept: "application/json",
         Authorization: `Bearer ${TMDB_API_KEY}`,
       },
-      timeout: 10000,
+      timeout: 20000,
     };
     const response = await axios.get(url, options);
     console.log("response Status:: ", response.status);
@@ -23,9 +23,9 @@ const fetchDataFromTMDB = async (url) => {
       console.error(
         "Request timeout occurred. Increase the timeout or check your connection."
       );
-    }
+    }else{
     console.error(`error in fetch Api ${error.message} `);
     throw error;
-  }
+    }}
 };
 module.exports = { fetchDataFromTMDB };
