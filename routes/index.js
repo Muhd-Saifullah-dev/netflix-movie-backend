@@ -1,9 +1,9 @@
-const express=require("express")
-const rootRoutes=express.Router()
-const authRoute=require("./authRoute")
+const express = require("express");
+const rootRoutes = express.Router();
+const authRoute = require("./authRoute");
+const movieRoute = require("./movieRoute");
 
+rootRoutes.use("/auth", authRoute);
+rootRoutes.use("/movie", movieRoute);
 
-rootRoutes.use("/auth",authRoute)
-
-
-module.exports=rootRoutes
+module.exports = rootRoutes;
