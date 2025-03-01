@@ -7,11 +7,14 @@ const {
   getSimilarMovie,
   getPopularMovie,
 } = require("../controller/movie.controller");
+const {
+  ProtectedRouteMiddleware,
+} = require("../middleware/protected.middleware");
 
-movieRoute.get("/trending", getTrendingMovies);
-movieRoute.get("/trailer/:id", getMovieTrailer);
-movieRoute.get("/detail/:id", getMovieDetails);
-movieRoute.get("/similar/:id", getSimilarMovie);
-movieRoute.get("/:category", getPopularMovie);
+movieRoute.get("/trending", ProtectedRouteMiddleware, getTrendingMovies);
+movieRoute.get("/trailer/:id", ProtectedRouteMiddleware, getMovieTrailer);
+movieRoute.get("/detail/:id", ProtectedRouteMiddleware, getMovieDetails);
+movieRoute.get("/similar/:id", ProtectedRouteMiddleware, getSimilarMovie);
+movieRoute.get("/:category", ProtectedRouteMiddleware, getPopularMovie);
 
 module.exports = movieRoute;

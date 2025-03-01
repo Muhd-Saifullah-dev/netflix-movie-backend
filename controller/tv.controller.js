@@ -68,9 +68,9 @@ const getPopularTv = async (req, res, next) => {
   }
 };
 module.exports = {
-    getPopularTv,
-    getSimilarTv,
-    getTvDetails,
-    getTvTrailer,
-    getTrendingTV
+  getPopularTv,
+  getSimilarTv,
+  getTvDetails,
+  getTvTrailer,
+  getTrendingTV,
 };

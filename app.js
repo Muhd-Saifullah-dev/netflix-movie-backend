@@ -11,6 +11,8 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended:true
 }))
+
+app.use(cookieParser())
 app.use(ReqResInspector())
 app.get("/api/v1/heath-check",(req,res,next)=>{
     return res.status(200).json({
@@ -23,7 +25,7 @@ app.get("/api/v1/heath-check",(req,res,next)=>{
 
 // routes define here
 app.use("/api/v1",rootRoutes)
-app.use(cookieParser())
+
 
 
 
