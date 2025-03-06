@@ -6,13 +6,12 @@ const getTrendingTV = async (req, res, next) => {
     const data = await fetchDataFromTMDB(
       "https://api.themoviedb.org/3/trending/tv/day?language=en-US"
     );
-    const randomMovie =
+    const randomTV =
       data.results[Math.floor(Math.random() * data.results?.length)];
-    okResponse(res, 200, "fetch Get Trending Tv successfully", {
-      content: randomMovie,
-    });
+    okResponse(res, 200, "fetch Get Trending Tv successfully",randomTV);
   } catch (error) {
     console.error(`error in get Trending Tv :: ${error}`);
+    next(error)
   }
 };
 

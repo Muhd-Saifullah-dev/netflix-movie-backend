@@ -8,11 +8,10 @@ const getTrendingMovies = async (req, res, next) => {
     );
     const randomMovie =
       data.results[Math.floor(Math.random() * data.results?.length)];
-    okResponse(res, 200, "fetch Get Trending Movies successfully", {
-      content: randomMovie,
-    });
+    okResponse(res, 200, "fetch Get Trending Movies successfully", randomMovie);
   } catch (error) {
     console.error(`error in get Trending Movie :: ${error}`);
+    next(error)
   }
 };
 

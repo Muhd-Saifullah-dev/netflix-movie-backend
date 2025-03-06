@@ -74,8 +74,22 @@ const LogoutUser = async (req, res, next) => {
   }
 };
 
+const AuthCheck = async (req, res, next) => {
+  try {
+    if (!req?.user) {
+      throw new BadRequestError("No user found!");
+    }
+
+    okResponse(res, 200, "Check auth is valid", req.user);
+  } catch (error) {
+    console.error(`error in auth check :: ${error}`);
+    next(error);
+  }
+};
+
 module.exports = {
   SignupUser,
   LoginUser,
   LogoutUser,
+  AuthCheck,
 };

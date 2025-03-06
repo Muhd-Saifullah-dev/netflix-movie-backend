@@ -6,7 +6,10 @@ const fs = require("fs");
 
 const connectionDatabase = async () => {
   try {
-    const conn = await mongoose.connect(`${MONGO_URI}/${DB_NAME}`);
+    const conn = await mongoose.connect(`${MONGO_URI}/${DB_NAME}`,{
+      useNewUrlParser: true,
+  useUnifiedTopology: true,
+    });
     console.log(`MongoDB Connected  ${conn.connection.host}`);
 
     const modelsPath = path.join(__dirname, "../model");
